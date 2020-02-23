@@ -23,6 +23,7 @@ if(isset($_REQUEST["submit"]))
         if($conn->query($sql)===true)
         {
             $msg="registered sucessfully";
+            header('Location:home.php');
         }
         else
         {
