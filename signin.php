@@ -52,9 +52,13 @@
                {
                    $("#invalidmsg").html("invalid username or password");
                }
-               else
+               else if(data==="true")
                {
                    window.location.href="home.php";
+               }
+               else
+               {
+                   alert("error");
                }
             });
             }

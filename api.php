@@ -35,9 +35,8 @@ if(isset($_REQUEST["action"]) && !empty($_REQUEST["action"]))
     {
         $error="";
         $result;
-        $id=$_SESSION["useri"];
-            $name=$_REQUEST["user"];
-            $pass=$_REQUEST["pass"];
+            $name=trim($_REQUEST["user"]);
+            $pass=trim($_REQUEST["pass"]);
 
             $sql="select * from user where login='$name' and password='$pass'";
 
@@ -66,11 +65,7 @@ if(isset($_REQUEST["action"]) && !empty($_REQUEST["action"]))
         $login=$_REQUEST["login"];
         $pass=$_REQUEST["pass"];
         $result;
-//        if($pass!=$confPass)
-//        {
-//            $error="password donot match!";
-//        }
-        $sql="select * from user where login='$name'";
+        $sql="select * from user where login='$login' or name='$name'";
         $result=mysqli_query($conn,$sql);
         if($result)
             $recordsFound=mysqli_num_rows($result);
@@ -93,19 +88,33 @@ if(isset($_REQUEST["action"]) && !empty($_REQUEST["action"]))
             echo json_encode($result);
         }
 
-//            if($conn->query($sql)===true)
-//            {
-////                $msg="registered sucessfully";
-////                header('Location:home.php');
-//                $result=true;
-//                echo json_encode($result);
-//            }
-//            else
-//            {
-//                $result=false;
-//                echo json_encode($result);
-//            }
-
     }
+    if($action=="getchildfolders")
+    {
+        $id = $_SESSION["useri"];
+        $parentfolder1d = trim($_REQUEST["pfid"]);
+        $sql = "select * from folder where userid='$id' and parentfolder='$parentfolder1d'";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result)
+            $recordsFound = mysqli_num_rows($result);
+        else
+            $recordsFound = 0;
+        $results=array();
+        if ($recordsFound)
+        {
+            while($row=mysqli_fetch_assoc($result))
+            {
+                $results[]=$row;
+            }
+        }
+        else
+        {
+            $results[]="";
+        }
+        $output["data"]=$results;
+        echo json_encode($output);
+    }
+
 }
 $conn->close(); ?>
