@@ -8,7 +8,6 @@ $conn = new mysqli($servername, $user, $pass, $dbname);
 if (!$conn) {
     die("connection failed:" . mysqli_connect_error());
 }
-
 ?>
 <?php
 if(isset($_REQUEST["action"]) && !empty($_REQUEST["action"]))

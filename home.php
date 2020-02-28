@@ -39,7 +39,7 @@ $id=$_SESSION["useri"];
         </div>
     </div>
     <div class="col-10">
-        <div id="info"></div>
+        <div id="info">jj</div>
     </div>
 </div>
 <script>
@@ -55,6 +55,7 @@ $id=$_SESSION["useri"];
 
             success:function(response)
             {
+                alert("1");
                 if(response.data[0]!=="") {
                     for (var i = 0; i < response.data.length; i++) {
                         var obj = response.data[i];
@@ -77,10 +78,27 @@ $id=$_SESSION["useri"];
         {
             var n=$("#newfolname").val();
             var i=$("#parentfolderID").val();
-            var data={"action":"create","newFolderName":n,"pfid":i};
-            $.get("api.php",data);
-            $("#info").empty();
-            ajaxRequest();
+            var d={"action":"create","newFolderName":n,"pfid":i};
+            // $.get("api.php",data);
+            // $("#info").empty();
+            // ajaxRequest();
+            var settings={
+                type:"GET",
+                url:"api.php",
+                data:d,
+
+                success:function(response)
+                {
+                    alert("success");
+                    $("#info").empty();
+                    ajaxRequest();
+                },
+                error:function(err,type,httpStatus)
+                {
+                    alert("error has occured");
+                }
+            };
+            $.ajax(settings);
         });
 
     });
