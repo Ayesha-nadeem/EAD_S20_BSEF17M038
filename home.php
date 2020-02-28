@@ -1,9 +1,10 @@
 
 <?php
-require("conn.php");
-?>
-<?php
-$id=$_SESSION["useri"];
+session_start();
+if(isset($_SESSION["useri"])==false)
+{
+    header('Location:signin.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,11 +28,11 @@ $id=$_SESSION["useri"];
 
                     </div>
                     <div class="modal-body">
-                        <input type="text" name="newFolderName" id="newfolname">
+                        <input type="text" name="newFolderName" id="newfolname" onkeyup="Validation()" value="untitled folder">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">cancel</button>
-                        <input type="submit" class="btn btn-default" id="create"  data-dismiss="modal" value="create">
+                        <input type="submit" class="btn btn-primary" id="create"  data-dismiss="modal" value="create">
                     </div>
                 </div>
 
@@ -39,7 +40,7 @@ $id=$_SESSION["useri"];
         </div>
     </div>
     <div class="col-10">
-        <div id="info">jj</div>
+        <div id="info"></div>
     </div>
 </div>
 <script>
@@ -55,13 +56,11 @@ $id=$_SESSION["useri"];
 
             success:function(response)
             {
-                alert("1");
                 if(response.data[0]!=="") {
                     for (var i = 0; i < response.data.length; i++) {
                         var obj = response.data[i];
                         var folder=obj.foldername;
-                        var f=folder.replace(/`/g, "");
-                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)'>" + f + "</div> <input type='hidden' id='f' value=" + obj.folderid + ">")
+                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.folderid + ">")
                     }
                 }
             },
@@ -79,9 +78,6 @@ $id=$_SESSION["useri"];
             var n=$("#newfolname").val();
             var i=$("#parentfolderID").val();
             var d={"action":"create","newFolderName":n,"pfid":i};
-            // $.get("api.php",data);
-            // $("#info").empty();
-            // ajaxRequest();
             var settings={
                 type:"GET",
                 url:"api.php",
@@ -89,7 +85,6 @@ $id=$_SESSION["useri"];
 
                 success:function(response)
                 {
-                    alert("success");
                     $("#info").empty();
                     ajaxRequest();
                 },
@@ -107,6 +102,11 @@ $id=$_SESSION["useri"];
         $("#parentfolderID").val(parentFolderID);
         $("#info").empty();
         ajaxRequest();
+    }
+    function Validation()
+    {
+        var ele=$("#newfolname").val();
+        document.getElementById("create").disabled = ele === '';
     }
 </script>
 </body>
