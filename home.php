@@ -60,7 +60,7 @@ if(isset($_SESSION["useri"])==false)
                     for (var i = 0; i < response.data.length; i++) {
                         var obj = response.data[i];
                         var folder=obj.foldername;
-                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.folderid + ">")
+                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)' onclick='selected(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.folderid + ">")
                     }
                 }
             },
@@ -107,6 +107,11 @@ if(isset($_SESSION["useri"])==false)
     {
         var ele=$("#newfolname").val();
         document.getElementById("create").disabled = ele === '';
+    }
+    function selected(e)
+    {
+        $(e).css({"background-color":"#b8daff"});
+        $(e).siblings().css({"background-color":"white"});
     }
 </script>
 </body>
