@@ -22,6 +22,9 @@ namespace UMS.Entity
         public Boolean Chess { get; set; }
         public String ImageName { get; set; }
         public DateTime CreatedOn { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
+        public int ModifiedBy { get; set; }
         public String Email { get; set; }
     }
   

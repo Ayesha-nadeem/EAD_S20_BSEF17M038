@@ -247,9 +247,11 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Location = new System.Drawing.Point(544, 13);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(183, 129);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             // 
@@ -292,6 +294,7 @@
             // 
             // txtDOB
             // 
+            this.txtDOB.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.txtDOB.Location = new System.Drawing.Point(176, 408);
             this.txtDOB.Name = "txtDOB";
             this.txtDOB.Size = new System.Drawing.Size(293, 26);
@@ -299,6 +302,7 @@
             // 
             // comGender
             // 
+            this.comGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comGender.FormattingEnabled = true;
             this.comGender.Items.AddRange(new object[] {
             "f",

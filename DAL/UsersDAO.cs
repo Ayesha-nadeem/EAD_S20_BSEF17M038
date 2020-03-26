@@ -38,8 +38,8 @@ namespace DAL
             {
                 ch = 0;
             }
-            sqlQuery = "insert into dbo.Users(Name,Login,Password,Gender,Address,Age,NIC,DOB,IsCricket,Hockey,Chess,ImageName,CreatedOn,Email) values('"+dto.Name+"','"+dto.Login+ "','" +dto.Password+ "','" +dto.Gender+"','" +dto.Address+ "'," +dto.Age+ ",'" +dto.NIC+ "','" +dto.DOB+ "'," +c+ "," +h+ "," +ch+ ",'" +dto.ImageName+ "','" + dto.CreatedOn+"','"+dto.Email+"')";
-           using(DBHelper helper=new DBHelper())
+            sqlQuery = "insert into dbo.Users(Name,Login,Password,Gender,Address,Age,NIC,DOB,IsCricket,Hockey,Chess,ImageName,CreatedOn,CreatedBy,Email) values('" + dto.Name + "','" + dto.Login + "','" + dto.Password + "','" + dto.Gender + "','" + dto.Address + "'," + dto.Age + ",'" + dto.NIC + "','" + dto.DOB + "'," + c + "," + h + "," + ch + ",'" + dto.ImageName + "','" + dto.CreatedOn + "'," + dto.CreatedBy + ",'" + dto.Email + "')";
+            using (DBHelper helper=new DBHelper())
             {
                 return helper.executeQuery(sqlQuery);
             }
@@ -73,7 +73,17 @@ namespace DAL
             {
                 ch = 0;
             }
-            sqlQuery = "update dbo.Users set Name='"+dto.Name+"',Login='"+dto.Login+"',Password='"+dto.Password+"',Gender='"+dto.Gender+"',Address='"+dto.Address+"',Age="+dto.Age+",NIC='"+dto.NIC+"',DOB='"+dto.DOB+"',IsCricket="+c+",Hockey="+h+",Chess="+ch+",ImageName='"+dto.ImageName+"',CreatedOn='"+dto.CreatedOn+"',Email='"+dto.Email+"' where UserID="+dto.UserID;
+            sqlQuery = "update dbo.Users set Name='" + dto.Name + "',Login='" + dto.Login + "',Password='" + dto.Password + "',Gender='" + dto.Gender + "',Address='" + dto.Address + "',Age=" + dto.Age + ",NIC='" + dto.NIC + "',DOB='" + dto.DOB + "',IsCricket=" + c + ",Hockey=" + h + ",Chess=" + ch + ",ImageName='" + dto.ImageName + "',ModifiedOn='" + dto.ModifiedOn + "',Modifiedby='" + dto.ModifiedBy + "',Email='" + dto.Email + "' where UserID=" + dto.UserID;
+            using (DBHelper helper = new DBHelper())
+            {
+                return helper.executeQuery(sqlQuery);
+            }
+
+        }
+        public static int updateCreatedBy(int id)
+        {
+            String sqlQuery = "";
+            sqlQuery = "update dbo.Users set CreatedBy=" + id + "where UserID=" + id;
             using (DBHelper helper = new DBHelper())
             {
                 return helper.executeQuery(sqlQuery);
@@ -95,21 +105,21 @@ namespace DAL
             }
            
         }
-        public static usersDTO getuserbyEmail(String email)
-        {
-            string query = "Select * from dbo.Users where Email= " + email;
-            using (DBHelper helper = new DBHelper())
-            {
-                var reader = helper.executeReader(query);
-                usersDTO dto = null;
-                if (reader.Read())
-                {
-                    dto = fillDTO(reader);
-                }
-                return dto;
-            }
+        //public static usersDTO getuserbyEmail(String email)
+        //{
+        //    string query = "Select * from dbo.Users where Email= " + email;
+        //    using (DBHelper helper = new DBHelper())
+        //    {
+        //        var reader = helper.executeReader(query);
+        //        usersDTO dto = null;
+        //        if (reader.Read())
+        //        {
+        //            dto = fillDTO(reader);
+        //        }
+        //        return dto;
+        //    }
 
-        }
+        //}
         public static int  getUserId(String name,String login)
         {
             string query = "Select * from dbo.Users where Name='"+name+"' and Login='"+login+"'";
@@ -127,6 +137,22 @@ namespace DAL
             return 0;
         }
         public static int getUserId(String email)
+        {
+            string query = "Select * from dbo.Users where Name='" + email + "'";
+            using (DBHelper helper = new DBHelper())
+            {
+                var reader = helper.executeReader(query);
+
+                if (reader.Read())
+                {
+                    return (int)reader["UserID"];
+                }
+
+
+            }
+            return 0;
+        }
+        public static int getUserIdByEmail(String email)
         {
             string query = "Select * from dbo.Users where Name='" + email + "'";
             using (DBHelper helper = new DBHelper())
@@ -182,6 +208,15 @@ namespace DAL
             dto.Chess = reader.GetBoolean(11);
             dto.ImageName = (String)reader["ImageName"];
             dto.CreatedOn = (DateTime)reader["CreatedOn"];
+            dto.CreatedBy = (int)reader["CreatedBy"];
+            if (reader["ModifiedBy"] != DBNull.Value)
+            {
+                dto.ModifiedBy = (int)reader["ModifiedBy"];
+            }
+            if (reader["ModifiedOn"] != DBNull.Value)
+            {
+                dto.ModifiedOn = (DateTime)reader["ModifiedOn"];
+            }
             return dto;
         }
     }

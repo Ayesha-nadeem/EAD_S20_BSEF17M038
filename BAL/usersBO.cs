@@ -11,7 +11,10 @@ namespace BAL
     {
         public static int save(usersDTO dto)
         {
-            return DAL.UsersDAO.save(dto);
+            DAL.UsersDAO.save(dto);
+            int id = DAL.UsersDAO.getUserId(dto.Login);
+            DAL.UsersDAO.updateCreatedBy(id);
+            return id;
         }
         public static int update(usersDTO dto)
         {
@@ -29,9 +32,9 @@ namespace BAL
         {
             return DAL.UsersDAO.getallUsers();
         }
-        public static usersDTO getuserbyEmail(String email)
+        public static int getUserIdByEmail(String email)
         {
-            return DAL.UsersDAO.getuserbyEmail(email);
+            return DAL.UsersDAO.getUserIdByEmail(email);
         }
         public static int getUserId(String email)
         {
