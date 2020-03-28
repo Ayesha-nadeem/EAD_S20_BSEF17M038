@@ -57,7 +57,7 @@ namespace assignment_2
             if(id!=0)
             {
                 String code = "1234";
-               // EmailHandler.SendEmail(email, "code", "1234");
+                EmailHandler.SendEmail(email, "code", "1234");
                 EnterResetCode frm = new EnterResetCode(code,id);
                 frm.Show();
                 this.Close();
