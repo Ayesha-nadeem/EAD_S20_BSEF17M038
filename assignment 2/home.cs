@@ -19,11 +19,6 @@ namespace assignment_2
         {
             InitializeComponent();
             this.id = id;
-            
-            
-            //Bitmap bmp1 = new Bitmap(pictureBox1.Image);
-            //bmp1.Dispose();
-            //pictureBox1.Image.Dispose();
         }
         public home()
         {
@@ -37,18 +32,12 @@ namespace assignment_2
             {
                 frm.Show();
                 this.Close();
-               // File.Delete(@"C:\Users\Ayesha\source\repos\assignment 2\bin\Debug\images\b6076ea8-d615-4844-9a82-5bd195b9c983.jpg");
+               
             }
         }
 
         private void btnEditprofile_Click(object sender, EventArgs e)
         {
-            //var frm = Application.OpenForms["newUser"];
-            //if (frm != null)
-            //{
-            //    frm.Show();
-            //    this.Hide();
-            //}
             usersDTO dto = new usersDTO();
             dto = BAL.usersBO.getuserbyid(id);
             newUser frm = new newUser(this.id);

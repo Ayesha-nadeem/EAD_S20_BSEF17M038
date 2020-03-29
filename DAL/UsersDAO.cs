@@ -105,24 +105,9 @@ namespace DAL
             }
            
         }
-        //public static usersDTO getuserbyEmail(String email)
-        //{
-        //    string query = "Select * from dbo.Users where Email= " + email;
-        //    using (DBHelper helper = new DBHelper())
-        //    {
-        //        var reader = helper.executeReader(query);
-        //        usersDTO dto = null;
-        //        if (reader.Read())
-        //        {
-        //            dto = fillDTO(reader);
-        //        }
-        //        return dto;
-        //    }
-
-        //}
-        public static int  getUserId(String name,String login)
+        public static int  getUserId(String login)
         {
-            string query = "Select * from dbo.Users where Name='"+name+"' and Login='"+login+"'";
+            string query = "Select * from dbo.Users where Login='"+login+"'";
             using (DBHelper helper = new DBHelper())
             {
                 var reader = helper.executeReader(query);
@@ -136,25 +121,9 @@ namespace DAL
             }
             return 0;
         }
-        public static int getUserId(String email)
-        {
-            string query = "Select * from dbo.Users where Name='" + email + "'";
-            using (DBHelper helper = new DBHelper())
-            {
-                var reader = helper.executeReader(query);
-
-                if (reader.Read())
-                {
-                    return (int)reader["UserID"];
-                }
-
-
-            }
-            return 0;
-        }
         public static int getUserIdByEmail(String email)
         {
-            string query = "Select * from dbo.Users where Name='" + email + "'";
+            string query = "Select * from dbo.Users where Email='" + email + "'";
             using (DBHelper helper = new DBHelper())
             {
                 var reader = helper.executeReader(query);
@@ -206,6 +175,7 @@ namespace DAL
             dto.IsCricket = reader.GetBoolean(9);
             dto.Hockey = reader.GetBoolean(10);
             dto.Chess = reader.GetBoolean(11);
+            dto.Email = (String)reader["Email"];
             dto.ImageName = (String)reader["ImageName"];
             dto.CreatedOn = (DateTime)reader["CreatedOn"];
             dto.CreatedBy = (int)reader["CreatedBy"];

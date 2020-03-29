@@ -24,9 +24,9 @@ namespace BAL
         {
             return DAL.UsersDAO.getuserbyid(id);
         }
-        public static int getUserId(String name, String Login)
+        public static int getUserId(String Login)
         {
-            return DAL.UsersDAO.getUserId(name, Login);
+            return DAL.UsersDAO.getUserId(Login);
         }
         public static List<usersDTO> getallUsers()
         {
@@ -35,10 +35,6 @@ namespace BAL
         public static int getUserIdByEmail(String email)
         {
             return DAL.UsersDAO.getUserIdByEmail(email);
-        }
-        public static int getUserId(String email)
-        {
-            return DAL.UsersDAO.getUserId(email);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace assignment_2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var id = BAL.usersBO.getUserId(txtLogin.Text.Trim(), txtLogin.Text.Trim());
+            var id = BAL.usersBO.getUserId(txtLogin.Text.Trim());
             if(id==0)
             {
                 MessageBox.Show("invalid user");
@@ -53,7 +53,7 @@ namespace assignment_2
         private void btnResetPass_Click(object sender, EventArgs e)
         {
             var email = txtEmail.Text.Trim();
-            var id = BAL.usersBO.getUserId(email);
+            var id = BAL.usersBO.getUserIdByEmail(email);
             if(id!=0)
             {
                 String code = "1234";
