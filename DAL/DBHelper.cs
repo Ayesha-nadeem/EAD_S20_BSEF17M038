@@ -9,7 +9,7 @@ namespace DAL
 {
    internal class DBHelper:IDisposable
     {
-        String connStr = @"Data Source=DESKTOP-SL55SU6\SQLEXPRESS2012;Initial Catalog=Assignment4;User ID=sa;Password=123";
+        String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
 
         SqlConnection conn=null;
         public DBHelper()
