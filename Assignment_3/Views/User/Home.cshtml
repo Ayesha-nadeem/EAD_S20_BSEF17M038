@@ -38,6 +38,7 @@
 <script>
     function ajaxRequest()
     {
+        alert("hello");
         var i=$("#parentfolderID").val();
         var d={"pfid":i};
         var settings={
@@ -46,15 +47,19 @@
             url:"/User/GetChildFolders",
             data:d,
 
-            success:function(response)
+            success:function(r)
             {
-                if(response.data[0]!=="") {
-                    for (var i = 0; i < response.data.length; i++) {
-                        var obj = response.data[i];
-                        var folder=obj.foldername;
-                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)' onclick='selected(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.folderid + ">")
+                debugger;
+                alert("hello in folder display");
+                if (r.response[0] !== "") {
+                    var len = r.response.length;
+                    for (var i = 0; i < r.response.length; i++) {
+                        var obj = r.response[i];
+                        var folder=obj.FolderName;
+                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-3 m-1' ondblclick='fun(this)' onclick='selected(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.FolderID + ">")
                     }
                 }
+                //BAL.FolderBO.GetChildFolders(Convert.ToInt32(pfid), SessionManager.User.UserID);
             },
             error:function(err,type,httpStatus)
             {
@@ -77,6 +82,7 @@
 
                 success:function(response)
                 {
+                    alert("hello");
                     $("#info").empty();
                     ajaxRequest();
                 },

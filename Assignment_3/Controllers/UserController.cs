@@ -57,31 +57,27 @@ namespace Assignment_3.Controllers
 
             Object data = null;
 
+            List<FolderDTO> list = new List<FolderDTO>();
             try
             {
-                var url = "";
-                var flag = false;
+                
 
-                var obj = BAL.UserBO.ValidateUser(login, password);
+                var obj = BAL.FolderBO.GetChildFolders(Convert.ToInt32(pfid), SessionManager.User.UserID); ;
                 if (obj != null)
                 {
-                    flag = true;
-                    SessionManager.User = obj;
-                    url = Url.Content("~/User/Home");
+                    list=obj;
                 }
 
                 data = new
                 {
-                    valid = flag,
-                    urlToRedirect = url
+                    response = list,
                 };
             }
             catch (Exception)
             {
                 data = new
                 {
-                    valid = false,
-                    urlToRedirect = ""
+                    response = "",
                 };
             }
 

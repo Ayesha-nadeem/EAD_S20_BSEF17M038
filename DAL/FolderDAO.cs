@@ -29,16 +29,17 @@ namespace DAL
                 return helper.ExecuteQuery(sqlQuery);
             }
         }
-        //public static UserDTO GetUserById(int pid)
+    
+        //public static FolderDTO GetChildFolders(int pid,int userid)
         //{
 
-        //    var query = String.Format("Select * from dbo.Users Where UserId={0}", pid);
+        //    var query = String.Format("Select * from dbo.Folder Where UserId={0} and ParentFolderID={0}",userid, pid);
 
         //    using (DBHelper helper = new DBHelper())
         //    {
         //        var reader = helper.ExecuteReader(query);
 
-        //        UserDTO dto = null;
+        //        FolderDTO dto = null;
 
         //        if (reader.Read())
         //        {
@@ -48,13 +49,33 @@ namespace DAL
         //        return dto;
         //    }
         //}
-        private static UserDTO FillDTO(SqlDataReader reader)
+        public static List<FolderDTO> GetChildFolders(int pid, int userid)
         {
-            var dto = new UserDTO();
-            dto.UserID = reader.GetInt32(0);
-            dto.Name = reader.GetString(1);
-            dto.Login = reader.GetString(2);
-            dto.Password = reader.GetString(3);
+            using (DBHelper helper = new DBHelper())
+            {
+                var query = String.Format("Select * from dbo.Folder Where UserID={0} and ParentFolderID={1}", userid, pid);
+                var reader = helper.ExecuteReader(query);
+                List<FolderDTO> list = new List<FolderDTO>();
+
+                while (reader.Read())
+                {
+                    var dto = FillDTO(reader);
+                    if (dto != null)
+                    {
+                        list.Add(dto);
+                    }
+                }
+
+                return list;
+            }
+        }
+        private static FolderDTO FillDTO(SqlDataReader reader)
+        {
+            var dto = new FolderDTO();
+           dto.FolderID = reader.GetInt32(0);
+            dto.FolderName = reader.GetString(1);
+            dto.ParentFolderID = reader.GetInt32(2);
+            dto.UserID = reader.GetInt32(3);
             //dto.PictureName = reader.GetString(4);
             //dto.IsAdmin = reader.GetBoolean(5);
             //dto.IsActive = reader.GetBoolean(6);

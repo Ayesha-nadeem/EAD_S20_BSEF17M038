@@ -13,29 +13,33 @@ namespace BAL
         {
             return DAL.FolderDAO.Save(dto);
         }
+        public static List<FolderDTO> GetChildFolders(int pid, int userid)
+        {
+            return DAL.FolderDAO.GetChildFolders(pid, userid);
+        }
 
-        //public static int UpdatePassword(UserDTO dto)
-        //{
-        //    return PMS.DAL.UserDAO.UpdatePassword(dto);
-        //}
+            //public static int UpdatePassword(UserDTO dto)
+            //{
+            //    return PMS.DAL.UserDAO.UpdatePassword(dto);
+            //}
 
-        //public static UserDTO ValidateUser(String pLogin, String pPassword)
-        //{
-        //    return PMS.DAL.UserDAO.ValidateUser(pLogin, pPassword);
-        //}
-        //public static UserDTO GetUserById(int pid)
-        //{
-        //    return PMS.DAL.UserDAO.GetUserById(pid);
-        //}
-        //public static List<UserDTO> GetAllUsers()
-        //{
-        //    return PMS.DAL.UserDAO.GetAllUsers();
-        //}
+            //public static UserDTO ValidateUser(String pLogin, String pPassword)
+            //{
+            //    return PMS.DAL.UserDAO.ValidateUser(pLogin, pPassword);
+            //}
+            //public static UserDTO GetUserById(int pid)
+            //{
+            //    return PMS.DAL.UserDAO.GetUserById(pid);
+            //}
+            //public static List<UserDTO> GetAllUsers()
+            //{
+            //    return PMS.DAL.UserDAO.GetAllUsers();
+            //}
 
-        //public static int DeleteUser(int pid)
-        //{
-        //    return PMS.DAL.UserDAO.DeleteUser(pid);
-        //}
+            //public static int DeleteUser(int pid)
+            //{
+            //    return PMS.DAL.UserDAO.DeleteUser(pid);
+            //}
 
-    }
+        }
 }
