@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BAL
 {
-    public class UserBO
+    public class FolderBO
     {
-        public static int Save(UserDTO dto)
+        public static int Save(FolderDTO dto)
         {
-            return DAL.UserDAO.Save(dto);
+            return DAL.FolderDAO.Save(dto);
         }
 
         //public static int UpdatePassword(UserDTO dto)
@@ -19,10 +19,10 @@ namespace BAL
         //    return PMS.DAL.UserDAO.UpdatePassword(dto);
         //}
 
-        public static UserDTO ValidateUser(String pLogin, String pPassword)
-        {
-            return DAL.UserDAO.ValidateUser(pLogin, pPassword);
-        }
+        //public static UserDTO ValidateUser(String pLogin, String pPassword)
+        //{
+        //    return PMS.DAL.UserDAO.ValidateUser(pLogin, pPassword);
+        //}
         //public static UserDTO GetUserById(int pid)
         //{
         //    return PMS.DAL.UserDAO.GetUserById(pid);

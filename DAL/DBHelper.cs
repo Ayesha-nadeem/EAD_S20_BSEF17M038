@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMS.DAL
+namespace DAL
 {
     internal class DBHelper : IDisposable
     {

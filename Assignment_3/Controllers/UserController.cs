@@ -52,6 +52,68 @@ namespace Assignment_3.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetChildFolders(String pfid)
+        {
+
+            Object data = null;
+
+            try
+            {
+                var url = "";
+                var flag = false;
+
+                var obj = BAL.UserBO.ValidateUser(login, password);
+                if (obj != null)
+                {
+                    flag = true;
+                    SessionManager.User = obj;
+                    url = Url.Content("~/User/Home");
+                }
+
+                data = new
+                {
+                    valid = flag,
+                    urlToRedirect = url
+                };
+            }
+            catch (Exception)
+            {
+                data = new
+                {
+                    valid = false,
+                    urlToRedirect = ""
+                };
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        // var d={"newFolderName":n,"pfid":i};
+        public JsonResult Create(String newFolderName, String pfid)
+        {
+            Object data = null;
+            try
+            {
+                var flag = false;
+                    var dto = new FolderDTO();
+                    dto.FolderName = newFolderName;
+                    dto.ParentFolderID = Convert.ToInt32(pfid);
+                    dto.UserID =SessionManager.User.UserID;
+                    var save = BAL.FolderBO.Save(dto);
+                    flag = true;
+                data = new
+                {
+                    valid = flag,
+                };
+            }
+            catch (Exception)
+            {
+                data = new
+                {
+                    valid = false,
+                };
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Home()
         {
             return View();

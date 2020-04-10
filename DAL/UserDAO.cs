@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMS.DAL
+namespace DAL
 {
     public static class UserDAO
     {
