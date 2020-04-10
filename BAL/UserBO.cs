@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMS.BAL
+namespace BAL
 {
     public class UserBO
     {
-        //public static int Save(UserDTO dto)
-        //{
-        //    return PMS.DAL.UserDAO.Save(dto);
-        //}
+        public static int Save(UserDTO dto)
+        {
+            return PMS.DAL.UserDAO.Save(dto);
+        }
 
         //public static int UpdatePassword(UserDTO dto)
         //{

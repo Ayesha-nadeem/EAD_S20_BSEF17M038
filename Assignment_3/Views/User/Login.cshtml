@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/PublicloginLayout.cshtml";
+    Layout = "~/Views/Shared/PublicLayout.cshtml";
 }
 
 @section scripts {
@@ -44,5 +44,6 @@
 <div>
     Login: <input type="text" id="txtLogin" /> <br />
     Password:<input type="password" id="txtPassword" /> <br />
-    <input type="submit" value="Login" id="btnLogin" />
+    <input type="submit" value="Login" id="btnLogin" /><br />
+    <a href="/User/Register">Register</a>
 </div>

@@ -11,25 +11,25 @@ namespace PMS.DAL
 {
     public static class UserDAO
     {
-        //public static int Save(UserDTO dto)
-        //{
-        //    String sqlQuery = "";
-        //    if (dto.UserID > 0)
-        //    {
-        //        sqlQuery = String.Format("Update dbo.Users Set Name='{0}', PictureName='{1}' Where UserID={2}",
-        //            dto.Name, dto.PictureName, dto.UserID);
-        //    }
-        //    else
-        //    {
-        //        sqlQuery = String.Format("INSERT INTO dbo.Users(Name, Login,Password, PictureName, IsAdmin,IsActive) VALUES('{0}','{1}','{2}','{3}',{4},{5})",
-        //            dto.Name, dto.Login, dto.Password, dto.PictureName, 0, 1);
-        //    }
+        public static int Save(UserDTO dto)
+        {
+            String sqlQuery = "";
+            //if (dto.UserID > 0)
+            //{
+            //    sqlQuery = String.Format("Update dbo.Users Set Name='{0}', Password='{1}',Login='{2}' Where UserID={2}",
+            //        dto.Name, dto.Password,dto.Login, dto.UserID);
+            //}
+            //else
+            //{
+            sqlQuery = String.Format("INSERT INTO dbo.Users(Name, Login,Password) VALUES('{0}','{1}','{2}')",
+                dto.Name, dto.Login, dto.Password);
+            //}
 
-        //    using (DBHelper helper = new DBHelper())
-        //    {
-        //        return helper.ExecuteQuery(sqlQuery);
-        //    }
-        //}
+            using (DBHelper helper = new DBHelper())
+            {
+                return helper.ExecuteQuery(sqlQuery);
+            }
+        }
 
         //public static int UpdatePassword(UserDTO dto)
         //{
