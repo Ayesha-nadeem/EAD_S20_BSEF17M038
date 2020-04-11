@@ -19,11 +19,14 @@
                     url: "/User/ValidateUser",
                     data: d,
                     success: function (resp) {
-                        if (resp.valid == true) {
+                        if (resp.empty == true) {
+                            $("#cpassSpan").html("all fields required");
+                        }
+                        else if (resp.valid == true) {
                             location.href = resp.urlToRedirect;
                         }
                         else {
-                            alert("Invalid Login/Password");
+                             $("#cpassSpan").html("Invalid Login/Password");
                         }
                     },
                     error: function (e) {
@@ -45,5 +48,6 @@
     Login: <input type="text" id="txtLogin" /> <br />
     Password:<input type="password" id="txtPassword" /> <br />
     <input type="submit" value="Login" id="btnLogin" /><br />
-    <a href="/User/Register">Register</a>
+    <a href='@Url.Content("~/User/Register")'>Register</a>
+    <span style="color:red" id="cpassSpan"></span>
 </div>
