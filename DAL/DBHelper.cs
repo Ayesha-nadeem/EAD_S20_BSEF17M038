@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,28 +10,28 @@ namespace DAL
     internal class DBHelper : IDisposable
     {
         String _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["MyConnString"].ConnectionString;
-        SqlConnection _conn = null;
+        MySqlConnection _conn = null;
         public DBHelper()
         {
-            _conn = new SqlConnection(_connStr);
+            _conn = new MySqlConnection(_connStr);
             _conn.Open();
         }
 
         public int ExecuteQuery(String sqlQuery)
         {
-            SqlCommand command = new SqlCommand(sqlQuery, _conn);
+            MySqlCommand command = new MySqlCommand(sqlQuery, _conn);
             var count = command.ExecuteNonQuery();
             return count;
         }
         public Object ExecuteScalar(String sqlQuery)
         {
-            SqlCommand command = new SqlCommand(sqlQuery, _conn);
+            MySqlCommand command = new MySqlCommand(sqlQuery, _conn);
             return command.ExecuteScalar();
         }
 
-        public SqlDataReader ExecuteReader(String sqlQuery)
+        public MySqlDataReader ExecuteReader(String sqlQuery)
         {
-            SqlCommand command = new SqlCommand(sqlQuery, _conn);
+            MySqlCommand command = new MySqlCommand(sqlQuery, _conn);
             return command.ExecuteReader();
         }
 

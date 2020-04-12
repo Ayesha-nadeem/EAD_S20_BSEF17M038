@@ -10,7 +10,7 @@ namespace Assignment_3.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
+        
         [HttpGet]
         public ActionResult Login()
         {
@@ -32,8 +32,6 @@ namespace Assignment_3.Controllers
             }
             else
             {
-
-
                 try
                 {
                     var url = "";
@@ -74,8 +72,6 @@ namespace Assignment_3.Controllers
             List<FolderDTO> list = new List<FolderDTO>();
             try
             {
-
-
                 var obj = BAL.FolderBO.GetChildFolders(Convert.ToInt32(pfid), SessionManager.User.UserID); ;
                 if (obj != null)
                 {
@@ -97,7 +93,6 @@ namespace Assignment_3.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        // var d={"newFolderName":n,"pfid":i};
         public JsonResult Create(String newFolderName, String pfid)
         {
 
