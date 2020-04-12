@@ -100,27 +100,38 @@ namespace Assignment_3.Controllers
         // var d={"newFolderName":n,"pfid":i};
         public JsonResult Create(String newFolderName, String pfid)
         {
+
             Object data = null;
-            try
-            {
-                var flag = false;
-                var dto = new FolderDTO();
-                dto.FolderName = newFolderName;
-                dto.ParentFolderID = Convert.ToInt32(pfid);
-                dto.UserID = SessionManager.User.UserID;
-                var save = BAL.FolderBO.Save(dto);
-                flag = true;
-                data = new
-                {
-                    valid = flag,
-                };
-            }
-            catch (Exception)
+            if (newFolderName == "")
             {
                 data = new
                 {
                     valid = false,
                 };
+            }
+            else
+            {
+                try
+                {
+                    var flag = false;
+                    var dto = new FolderDTO();
+                    dto.FolderName = newFolderName;
+                    dto.ParentFolderID = Convert.ToInt32(pfid);
+                    dto.UserID = SessionManager.User.UserID;
+                    var save = BAL.FolderBO.Save(dto);
+                    flag = true;
+                    data = new
+                    {
+                        valid = flag,
+                    };
+                }
+                catch (Exception)
+                {
+                    data = new
+                    {
+                        valid = false,
+                    };
+                }
             }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -176,6 +187,7 @@ namespace Assignment_3.Controllers
                         dto.Name = Name;
                         var save = BAL.UserBO.Save(dto);
                         flag = true;
+                        obj = BAL.UserBO.ValidateUser(Login, Password);
                         SessionManager.User = obj;
                         url = Url.Content("~/User/Home");
                     }

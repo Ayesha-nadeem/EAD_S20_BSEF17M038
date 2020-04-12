@@ -9,28 +9,28 @@
     <script>
         $(function () {
             $("#btnLogin").click(function () {
-                alert("hello");
+               
                 var login = $("#txtLogin").val();
                 var pass = $("#txtPassword").val();
                 var d = { "login": login, "password": pass };
                 var settings = {
-                    type : "POST",
+                    type: "POST",
                     dataType: "json",
                     url: "/User/ValidateUser",
                     data: d,
                     success: function (resp) {
                         if (resp.empty == true) {
-                            $("#cpassSpan").html("all fields required");
+                            $("#error").html("all fields required");
                         }
                         else if (resp.valid == true) {
                             location.href = resp.urlToRedirect;
                         }
                         else {
-                             $("#cpassSpan").html("Invalid Login/Password");
+                            $("#error").html("Invalid Login/Password");
                         }
                     },
                     error: function (e) {
-                        alert("error");
+                        $("#error").html("something went wrong");
                     }
                 };
                 $.ajax(settings);
@@ -42,12 +42,22 @@
 }
 
 
-<h2>Login2</h2>
 
-<div>
-    Login: <input type="text" id="txtLogin" /> <br />
-    Password:<input type="password" id="txtPassword" /> <br />
-    <input type="submit" value="Login" id="btnLogin" /><br />
-    <a href='@Url.Content("~/User/Register")'>Register</a>
-    <span style="color:red" id="cpassSpan"></span>
+<div class="row m-0">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="user" class="font-weight-bold"> Email:</label>
+            <input type="email" id="txtLogin" class="form-control w-100" placeholder="someone@gmail.com" />
+        </div>
+        <div class="form-group">
+            <label for="password" class="font-weight-bold">Password:</label>
+            <input type="password" id="txtPassword" class="form-control w-100" placeholder="password" />
+        </div>
+        <input type="submit" class="btn btn-outline-success font-weight-bold text-success w-25" name="submit" value="submit" id="btnLogin" />
+        <a href='@Url.Content("~/User/Register")' class="btn btn-outline-success font-weight-bold text-success w-25">register</a>
+        <span style="color:red" id="error"></span>
+    </div>
+    <div class="col-4"></div>
 </div>
