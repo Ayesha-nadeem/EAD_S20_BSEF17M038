@@ -5,35 +5,16 @@
 
 @section scripts {
 
-
+    <script src="~/Scripts/user.js"></script>
     <script>
         $(function () {
             $("#btnLogin").click(function () {
-               
+
                 var login = $("#txtLogin").val();
                 var pass = $("#txtPassword").val();
                 var d = { "login": login, "password": pass };
-                var settings = {
-                    type: "POST",
-                    dataType: "json",
-                    url: "/User/ValidateUser",
-                    data: d,
-                    success: function (resp) {
-                        if (resp.empty == true) {
-                            $("#error").html("all fields required");
-                        }
-                        else if (resp.valid == true) {
-                            location.href = resp.urlToRedirect;
-                        }
-                        else {
-                            $("#error").html("Invalid Login/Password");
-                        }
-                    },
-                    error: function (e) {
-                        $("#error").html("something went wrong");
-                    }
-                };
-                $.ajax(settings);
+             
+                userManager.validateUser(d)
                 return false;
             });
         });
@@ -48,8 +29,8 @@
     <div class="col-4">
         <h2>Login</h2>
         <div class="form-group">
-            <label for="user" class="font-weight-bold"> Email:</label>
-            <input type="email" id="txtLogin" class="form-control w-100" placeholder="someone@gmail.com" />
+            <label for="user" class="font-weight-bold"> Login:</label>
+            <input type="email" id="txtLogin" class="form-control w-100" placeholder="login" />
         </div>
         <div class="form-group">
             <label for="password" class="font-weight-bold">Password:</label>

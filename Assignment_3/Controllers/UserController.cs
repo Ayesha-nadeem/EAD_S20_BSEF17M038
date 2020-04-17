@@ -106,6 +106,7 @@ namespace Assignment_3.Controllers
             {
                 data = new
                 {
+                    empty = true,
                     valid = false,
                 };
             }
@@ -113,22 +114,24 @@ namespace Assignment_3.Controllers
             {
                 try
                 {
-                    var flag = false;
+                    
                     var dto = new FolderDTO();
                     dto.FolderName = newFolderName;
                     dto.ParentFolderID = Convert.ToInt32(pfid);
                     dto.UserID = SessionManager.User.UserID;
                     var save = BAL.FolderBO.Save(dto);
-                    flag = true;
+                    
                     data = new
                     {
-                        valid = flag,
+                        empty=false,
+                        valid = true,
                     };
                 }
                 catch (Exception)
                 {
                     data = new
                     {
+                        empty=false,
                         valid = false,
                     };
                 }
@@ -211,5 +214,6 @@ namespace Assignment_3.Controllers
             }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

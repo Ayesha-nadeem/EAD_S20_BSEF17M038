@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/PublicLayout.cshtml";
 }
 
-<h2>Home</h2>
 
 <input type="hidden" id="parentfolderID" value=0>
 <div class="row m-0">
     <div class="col-2">
 
-        <button type="button" class="btn btn-outline-success btn-lg mt-1" data-toggle="modal" data-target="#myModal">+ NEW</button>
+        <button type="button" class="btn btn-outline-success btn-lg mt-1" data-toggle="modal" data-target="#myModal">+ NEW</button><br />
+        <a href='@Url.Content("~/User/Logout")'>LOGOUT</a>
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -31,82 +31,42 @@
             </div>
         </div>
     </div>
+    
     <div class="col-10 ">
+        <h2>Home</h2>
         <div id="info"></div>
     </div>
 </div>
-<script>
-    function ajaxRequest()
-    {
-       
-        var i=$("#parentfolderID").val();
-        var d={"pfid":i};
-        var settings={
-            type:"GET",
-            dataType:"json",
-            url:"/User/GetChildFolders",
-            data:d,
+@section scripts{
 
-            success:function(r)
-            {
-                if (r.response[0] !== "") {
-                    var len = r.response.length;
-                    for (var i = 0; i < r.response.length; i++) {
-                        var obj = r.response[i];
-                        var folder=obj.FolderName;
-                        $("#info").append("<div style='display:inline-block' class='border rounder-sm folder w-25 p-2 m-1' ondblclick='fun(this)' onclick='selected(this)'>" + folder + "</div> <input type='hidden' id='f' value=" + obj.FolderID + ">")
-                    }
-                }
-            },
-            error:function(err,type,httpStatus)
-            {
-                alert("error has occured");
-            }
-        };
-        $.ajax(settings);
-    }
-    $(document).ready(function(){
-        ajaxRequest();
-        $("#create").click(function()
-        {
-            var n=$("#newfolname").val();
-            var i=$("#parentfolderID").val();
-            var d={"newFolderName":n,"pfid":i};
-            var settings={
-                type:"GET",
-                url:"/User/Create",
-                data:d,
+    <script src="~/Scripts/folder.js"></script>
+    <script>
+        function ajaxRequest() {
 
-                success:function(response)
-                {
-                    
-                    $("#info").empty();
-                    $("#newfolname").val("untitled folder");
-                    ajaxRequest();
-                },
-                error:function(err,type,httpStatus)
-                {
-                    alert("error has occured");
-                }
-            };
-            $.ajax(settings);
+            var i = $("#parentfolderID").val();
+            var d = { "pfid": i };
+           
+            folderManager.getChildFolders(d);
+        }
+        $(document).ready(function () {
+            ajaxRequest();
+            $("#create").click(function () {
+                var n = $("#newfolname").val();
+                var i = $("#parentfolderID").val();
+                var d = { "newFolderName": n, "pfid": i };
+               
+                folderManager.create(d);
+            });
+
         });
-
-    });
-    function fun(currentDiv) {
-        var parentFolderID=currentDiv.nextElementSibling.value;
-        $("#parentfolderID").val(parentFolderID);
-        $("#info").empty();
-        ajaxRequest();
-    }
-    function Validation()
-    {
-        var ele=$("#newfolname").val();
-        document.getElementById("create").disabled = ele === '';
-    }
-    function selected(e)
-    {
-        $(e).css({"background-color":"#b8daff"});
-        $(e).siblings().css({"background-color":"white"});
-    }
-</script>
+        function fun(currentDiv) {
+            folderManager.fun(currentDiv);
+        }
+        function Validation() {
+            folderManager.Validation();
+        }
+        function selected(e) {
+            folderManager.selected(e);
+        }
+    </script>
+}

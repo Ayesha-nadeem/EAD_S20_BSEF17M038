@@ -14,6 +14,11 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        window.BasePath = '@Url.Content("~")';
+    </script>
+
+
     @RenderSection("scripts", false)
 </head>
 <body>
