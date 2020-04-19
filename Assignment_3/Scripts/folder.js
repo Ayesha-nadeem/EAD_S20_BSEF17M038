@@ -31,6 +31,7 @@ var folderManager = (function () {
                 data: d,
 
                 success: function (response) {
+                    
                     if (response.empty == true && response.valid == false) {
                         alert("invalid folder name");
                     }

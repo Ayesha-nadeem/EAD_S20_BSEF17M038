@@ -101,6 +101,7 @@ namespace Assignment_3.Controllers
             {
                 data = new
                 {
+                    empty = true,
                     valid = false,
                 };
             }
@@ -117,14 +118,16 @@ namespace Assignment_3.Controllers
                     flag = true;
                     data = new
                     {
-                        valid = flag,
+                        empty = false,
+                        valid = true,
                     };
                 }
                 catch (Exception)
                 {
                     data = new
                     {
-                        valid = false,
+                        empty = false,
+                        valid = false
                     };
                 }
             }

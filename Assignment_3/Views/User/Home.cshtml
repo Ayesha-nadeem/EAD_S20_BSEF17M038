@@ -4,14 +4,13 @@
     Layout = "~/Views/Shared/PublicLayout.cshtml";
 }
 
-<h2>Home</h2>
 
 <input type="hidden" id="parentfolderID" value=0>
 <div class="row m-0">
     <div class="col-2">
 
-        <button type="button" class="btn btn-outline-success btn-lg mt-1" data-toggle="modal" data-target="#myModal">+ NEW</button>
-        <br /><a href='@Url.Content("~/User/Logout")'>LOGOUT</a>
+        <button type="button" class="btn btn-outline-success btn-lg mt-1" data-toggle="modal" data-target="#myModal">+ NEW</button><br />
+        <a href='@Url.Content("~/User/Logout")'>LOGOUT</a>
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -32,12 +31,14 @@
             </div>
         </div>
     </div>
+
     <div class="col-10 ">
+        <h2>Home</h2>
         <div id="info"></div>
     </div>
 </div>
-@section scripts
-{
+@section scripts{
+
     <script src="~/Scripts/folder.js"></script>
     <script>
         function ajaxRequest() {
