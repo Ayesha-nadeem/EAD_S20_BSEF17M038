@@ -3,24 +3,6 @@
     Layout = "~/Views/Shared/PublicLayout.cshtml";
 }
 
-@section scripts {
-
-    <script src="~/Scripts/user.js"></script>
-    <script>
-        $(function () {
-            $("#btnLogin").click(function () {
-
-                var login = $("#txtLogin").val();
-                var pass = $("#txtPassword").val();
-                var d = { "login": login, "password": pass };
-             
-                userManager.validateUser(d)
-                return false;
-            });
-        });
-    </script>
-
-}
 
 
 
@@ -42,3 +24,55 @@
     </div>
     <div class="col-4"></div>
 </div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var basePath = 'https://localhost:44322/';
+           
+            $("#btnLogin").click(function () {
+                var login = $("#txtLogin").val();
+                var pass = $("#txtPassword").val();
+                var dataToSend = { Login: login, Password: pass };
+                var settings = {
+                    type: "POST",
+                    dataType: "json",
+                    url: basePath + "api/Values/Save",
+                    data: dataToSend,
+                    success: function (result) {
+                        if (result.User == null) {
+                            $("#error").html("error");
+                                }
+                        else {
+                            sessionStorage.setItem('token', result.token);
+                            var dataToSend2 = { "dto": result.User };
+                            var settings2 =
+                            {
+                                type: "POST",
+                                dataType: "json",
+                                url: "/User/setSession",
+                                data: dataToSend2,
+                                success: function (result) {
+                                    location.href = "/User/Home"
+                                },
+                                error: function (e) {
+                                    alert("session error");
+                                }
+
+                            }
+                            $.ajax(settings2);
+                        }
+                    },
+                    error: function (e) {
+                        alert("User error");
+                    }
+                };
+                $.ajax(settings);
+                return false;
+            });
+        });
+    </script>
+}

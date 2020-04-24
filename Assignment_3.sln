@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{69B94D6D-DAC5-4BB1-8478-EC70C41B9323}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{2E03ECBE-3657-4CFA-89CF-18D4A42D9C35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE8A06D4-6FC9-4DC3-A98E-20FC515A12D3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +40,10 @@ Global
 		{69B94D6D-DAC5-4BB1-8478-EC70C41B9323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69B94D6D-DAC5-4BB1-8478-EC70C41B9323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69B94D6D-DAC5-4BB1-8478-EC70C41B9323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E03ECBE-3657-4CFA-89CF-18D4A42D9C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E03ECBE-3657-4CFA-89CF-18D4A42D9C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E03ECBE-3657-4CFA-89CF-18D4A42D9C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E03ECBE-3657-4CFA-89CF-18D4A42D9C35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

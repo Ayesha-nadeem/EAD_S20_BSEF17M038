@@ -1,13 +1,15 @@
-﻿
+﻿var basePath = "https://localhost:44322/";
 var folderManager = (function () {
     return {
         getChildFolders: function (d) {
             var settings = {
                 type: "GET",
                 dataType: "json",
-                url:'/User/GetChildFolders',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                url: basePath+'/api/Values/GetChildFolders',
                 data: d,
-
                 success: function (r) {
                     if (r.response[0] !== "") {
                         var len = r.response.length;
@@ -27,7 +29,7 @@ var folderManager = (function () {
         create: function (d) {
             var settings = {
                 type: "GET",
-                url:'/User/Create',
+                url: '/User/Create',
                 data: d,
 
                 success: function (response) {

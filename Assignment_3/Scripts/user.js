@@ -1,28 +1,8 @@
-﻿var userManager = (function () {
+﻿
+
+
+var userManager = (function () {
     return {
-        validateUser: function (d) {
-            var settings = {
-                type: "POST",
-                dataType: "json",
-                url: '/User/ValidateUser',
-                data: d,
-                success: function (resp) {
-                    if (resp.empty == true) {
-                        $("#error").html("all fields required");
-                    }
-                    else if (resp.valid == true) {
-                        location.href = resp.urlToRedirect;
-                    }
-                    else {
-                        $("#error").html("Invalid Login/Password");
-                    }
-                },
-                error: function (e) {
-                    $("#error").html("something went wrong");
-                }
-            };
-            $.ajax(settings);
-        },
         save: function (d) {
             var settings = {
                 type: "POST",

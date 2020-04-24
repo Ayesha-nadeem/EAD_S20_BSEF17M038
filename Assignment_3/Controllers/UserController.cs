@@ -18,127 +18,138 @@ namespace Assignment_3.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult ValidateUser(String login, String password)
+        public JsonResult setSession(UserDTO dto)
         {
-            Object data = null;
-            if (login == "" || password == "")
+
+            SessionManager.User = dto;
+            var data = new
             {
-                data = new
-                {
-                    empty = true,
-                    valid = false,
-                    urlToRedirect = ""
-                };
-            }
-            else
-            {
-
-
-                try
-                {
-                    var url = "";
-                    var flag = false;
-
-                    var obj = BAL.UserBO.ValidateUser(login, password);
-                    if (obj != null)
-                    {
-                        flag = true;
-                        SessionManager.User = obj;
-                        url = Url.Content("~/User/Home");
-                    }
-
-                    data = new
-                    {
-                        empty = false,
-                        valid = flag,
-                        urlToRedirect = url
-                    };
-                }
-                catch (Exception)
-                {
-                    data = new
-                    {
-                        empty = false,
-                        valid = false,
-                        urlToRedirect = ""
-                    };
-                }
-            }
+                valid = true,
+            };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetChildFolders(String pfid)
+        //[HttpPost]
+        //public JsonResult ValidateUser(String login, String password)
+        //{
+        //    Object data = null;
+        //    if (login == "" || password == "")
+        //    {
+        //        data = new
+        //        {
+        //            empty = true,
+        //            valid = false,
+        //            urlToRedirect = ""
+        //        };
+        //    }
+        //    else
+        //    {
+
+
+        //        try
+        //        {
+        //            var url = "";
+        //            var flag = false;
+
+        //            var obj = BAL.UserBO.ValidateUser(login, password);
+        //            if (obj != null)
+        //            {
+        //                flag = true;
+        //                SessionManager.User = obj;
+        //                url = Url.Content("~/User/Home");
+        //            }
+
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = flag,
+        //                urlToRedirect = url
+        //            };
+        //        }
+        //        catch (Exception)
+        //        {
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = false,
+        //                urlToRedirect = ""
+        //            };
+        //        }
+        //    }
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+        //public JsonResult GetChildFolders(String pfid)
+        //{
+
+        //    Object data = null;
+
+        //    List<FolderDTO> list = new List<FolderDTO>();
+        //    try
+        //    {
+
+
+        //        var obj = BAL.FolderBO.GetChildFolders(Convert.ToInt32(pfid), SessionManager.User.UserID); ;
+        //        if (obj != null)
+        //        {
+        //            list = obj;
+        //        }
+
+        //        data = new
+        //        {
+        //            response = list,
+        //        };
+        //    }
+        //    catch (Exception)
+        //    {
+        //        data = new
+        //        {
+        //            response = "",
+        //        };
+        //    }
+
+    //        return Json(data, JsonRequestBehavior.AllowGet);
+    //}
+    // var d={"newFolderName":n,"pfid":i};
+    public JsonResult Create(String newFolderName, String pfid)
+    {
+
+        Object data = null;
+        if (newFolderName == "")
         {
-
-            Object data = null;
-
-            List<FolderDTO> list = new List<FolderDTO>();
+            data = new
+            {
+                empty = true,
+                valid = false,
+            };
+        }
+        else
+        {
             try
             {
 
-
-                var obj = BAL.FolderBO.GetChildFolders(Convert.ToInt32(pfid), SessionManager.User.UserID); ;
-                if (obj != null)
-                {
-                    list = obj;
-                }
+                var dto = new FolderDTO();
+                dto.FolderName = newFolderName;
+                dto.ParentFolderID = Convert.ToInt32(pfid);
+                dto.UserID = SessionManager.User.UserID;
+                var save = BAL.FolderBO.Save(dto);
 
                 data = new
                 {
-                    response = list,
+                    empty = false,
+                    valid = true,
                 };
             }
             catch (Exception)
             {
                 data = new
                 {
-                    response = "",
-                };
-            }
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-        // var d={"newFolderName":n,"pfid":i};
-        public JsonResult Create(String newFolderName, String pfid)
-        {
-
-            Object data = null;
-            if (newFolderName == "")
-            {
-                data = new
-                {
-                    empty = true,
+                    empty = false,
                     valid = false,
                 };
             }
-            else
-            {
-                try
-                {
-                    
-                    var dto = new FolderDTO();
-                    dto.FolderName = newFolderName;
-                    dto.ParentFolderID = Convert.ToInt32(pfid);
-                    dto.UserID = SessionManager.User.UserID;
-                    var save = BAL.FolderBO.Save(dto);
-                    
-                    data = new
-                    {
-                        empty=false,
-                        valid = true,
-                    };
-                }
-                catch (Exception)
-                {
-                    data = new
-                    {
-                        empty=false,
-                        valid = false,
-                    };
-                }
-            }
-            return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Home()
+        return Json(data, JsonRequestBehavior.AllowGet);
+    }
+    public ActionResult Home()
         {
 
             if (SessionManager.IsValidUser)
@@ -191,8 +202,8 @@ namespace Assignment_3.Controllers
                         var save = BAL.UserBO.Save(dto);
                         flag = true;
                         obj = BAL.UserBO.ValidateUser(Login, Password);
-                        SessionManager.User = obj;
-                        url = Url.Content("~/User/Home");
+                        //SessionManager.User = obj;
+                        url = Url.Content("~/User/Login");
                     }
 
                     data = new
