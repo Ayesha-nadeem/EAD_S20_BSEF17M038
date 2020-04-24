@@ -8,3 +8,5 @@
 /Entities/obj
 /packages
 /.vs
+/WebAPI/bin
+/WebAPI/obj
