@@ -31,27 +31,90 @@
     </div>
     <div class="col-4"></div>
 </div>
-@section scripts
+@*@section scripts
 {
     <script src="~/Scripts/user.js"></script>
     <script>
         $(document).ready(function () {
+            var basePath = 'https://localhost:44322/';
             $("#submit").click(function () {
                 var n = $("#user").val();
                 var i = $("#pass").val();
                 var l = $("#login").val();
                 var c = $("#confPass").val();
                 var d = { "Name": n, "Login": l, "Password": i };
-                if (n === "" || i === "" || l === "" || c === "") {
-                    $("#cpassSpan").html("all fields required");
-                }
-                else if (i !== c) {
-                    $("#cpassSpan").html("password donnot match");
-                }
-                else {
-                    userManager.save(d);
-                    return false;
-                }
+                //if (n === "" || i === "" || l === "" || c === "") {
+                //    $("#cpassSpan").html("all fields required");
+                //}
+                //else if (i !== c) {
+                //    $("#cpassSpan").html("password donnot match");
+                //}
+                //else {
+                var settings = {
+                    type: "POST",
+                    dataType: "json",
+                    url: basePath + "api/Values/Save2",
+                    data: d,
+                    success: function (resp) {
+
+                        alert("success" + res.valid);
+                        if (resp.empty == true) {
+                            $("#cpassSpan").html("all fields required");
+                        }
+                        else if (resp.valid == true) {
+                            location.href = "/User/Login";
+                        }
+                        else if (resp.valid == false) {
+                            $("#cpassSpan").html("Login already exist!");
+                        }
+                    },
+                    error: function (e) {
+                        $("#cpassSpan").html("error!");
+                    }
+                };
+                $.ajax(settings);
+                return false;
+                //}
+            });
+        });
+    </script>
+}*@
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var basePath = 'https://localhost:44322/';
+
+            $("#submit").click(function () {
+               var n = $("#user").val();
+                var i = $("#pass").val();
+                var l = $("#login").val();
+                var c = $("#confPass").val();
+                var d = { Name: n, Login: l, Password: i };
+                //var dataToSend = { Login: login, Password: pass };
+                var settings = {
+                    type: "POST",
+                    dataType: "json",
+                    url: basePath + "api/Values/Save2",
+                    data: d,
+                    success: function (resp) {
+                        alert("success")
+                         if (resp.empty == true) {
+                            $("#cpassSpan").html("all fields required");
+                        }
+                        else if (resp.valid == true) {
+                            location.href = "/User/Login";
+                        }
+                        else if (resp.valid == false) {
+                            $("#cpassSpan").html("Login already exist!");
+                        }
+                    },
+                    error: function (e) {
+                        alert("User error");
+                    }
+                };
+                $.ajax(settings);
+                return false;
             });
         });
     </script>

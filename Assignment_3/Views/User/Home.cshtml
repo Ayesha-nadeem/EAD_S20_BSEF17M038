@@ -49,13 +49,37 @@
             folderManager.getChildFolders(d);
         }
         $(document).ready(function () {
+            var basePath = "https://localhost:44322/";
             ajaxRequest();
             $("#create").click(function () {
                 var n = $("#newfolname").val();
                 var i = $("#parentfolderID").val();
-                var d = { "newFolderName": n, "pfid": i };
-               
-                folderManager.create(d);
+                var d = { NewFolderName: n, pfID: i };
+                //debugger;
+                var settings = {
+                type: "GET",
+                dataType: "json",
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                url: basePath+'api/Values/Create',
+                data: d,
+
+                success: function (response) {
+                    if (response.empty == true && response.valid == false) {
+                        alert("invalid folder name");
+                    }
+                    else if (response.valid == true && response.empty == false) {
+                        $("#info").empty();
+                        $("#newfolname").val("untitled folder");
+                        ajaxRequest();
+                    }
+                },
+                error: function (err, type, httpStatus) {
+                    alert("error has occured");
+                }
+            };
+            $.ajax(settings);
             });
 
         });

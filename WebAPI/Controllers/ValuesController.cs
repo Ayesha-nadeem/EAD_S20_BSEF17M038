@@ -18,7 +18,8 @@ namespace WebAPI.Controllers
 
     public class ValuesController : ApiController
     {
-       
+
+
         [HttpGet]
         public Object GetChildFolders(String pfid)
         {
@@ -32,7 +33,7 @@ namespace WebAPI.Controllers
                 {
 
                     IEnumerable<Claim> claims = identity.Claims;
-                    
+
                     try
                     {
 
@@ -67,25 +68,76 @@ namespace WebAPI.Controllers
             }
             return data;
         }
-       
+        [HttpGet]
+        public Object Create([FromUri]CreateFolderDTO dto1)
+        {
+
+            Object data = null;
+            if (dto1.NewFolderName == null)
+            {
+                data = new
+                {
+                    empty = true,
+                    valid = false,
+                };
+            }
+            else
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var identity = User.Identity as ClaimsIdentity;
+                    if (identity != null)
+                    {
+
+                        IEnumerable<Claim> claims = identity.Claims;
+                        try
+                        {
+
+                            var dto = new FolderDTO();
+                            dto.FolderName = dto1.NewFolderName;
+                            dto.ParentFolderID = Convert.ToInt32(dto1.pfID);
+                            dto.UserID = Convert.ToInt32(claims.Where(p => p.Type == "userid").FirstOrDefault()?.Value);
+                            var save = BAL.FolderBO.Save(dto);
+
+                            data = new
+                            {
+                                empty = false,
+                                valid = true,
+                            };
+                        }
+                        catch (Exception)
+                        {
+                            data = new
+                            {
+                                empty = false,
+                                valid = false,
+                            };
+                        }
+                    }
+                }
+            }
+            return data;
+        }
+
+
         [HttpPost]
-        public object Save(UserDTO dto) 
+        public object Save(UserDTO dto)
         {
             object data = null;
             UserDTO dto2 = null;
-            if (dto.Login=="" || dto.Password=="")
+            if (dto.Login == "" || dto.Password == "")
             {
                 data = new
                 {
                     token = "",
-                    User=dto2,
+                    User = dto2,
 
                 };
             }
             else
             {
                 var obj = BAL.UserBO.ValidateUser(dto.Login, dto.Password);
-                if(obj==null)
+                if (obj == null)
                 {
                     data = new
                     {
@@ -103,9 +155,9 @@ namespace WebAPI.Controllers
 
                     var permClaims = new List<Claim>();
                     permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-                    //permClaims.Add(new Claim("valid", "1"));
+
                     permClaims.Add(new Claim("userid", obj.UserID.ToString()));
-                    //permClaims.Add(new Claim("name", "bilal"));
+
 
                     var token = new JwtSecurityToken(issuer,
                                     issuer,
@@ -120,7 +172,59 @@ namespace WebAPI.Controllers
                     };
                 }
             }
-            
+
+            return data;
+        }
+
+        [HttpPost]
+        public Object Save2(UserDTO dto1)
+        {
+            Object data = null;
+            if (dto1.Name == null || dto1.Login == null || dto1.Password == null)
+            {
+                data = new
+                {
+                    empty = true,
+                    valid = false,
+
+                };
+            }
+            else
+            {
+                try
+                {
+                    var flag = false;
+
+                    var obj = BAL.UserBO.ValidateUser(dto1.Login, dto1.Password);
+                    if (obj == null)
+                    {
+                        var dto = new UserDTO();
+                        dto.Login = dto1.Login;
+                        dto.Password = dto1.Password;
+                        dto.Name = dto1.Name;
+                        var save = BAL.UserBO.Save(dto);
+                        flag = true;
+                        obj = BAL.UserBO.ValidateUser(dto1.Login, dto1.Password);
+
+                    }
+
+                    data = new
+                    {
+                        empty = false,
+                        valid = flag,
+
+                    };
+                }
+                catch (Exception)
+                {
+                    data = new
+                    {
+                        empty = false,
+                        valid = false,
+
+                    };
+                }
+            }
             return data;
         }
     }

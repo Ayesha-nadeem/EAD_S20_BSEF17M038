@@ -172,59 +172,59 @@ namespace Assignment_3.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public JsonResult save(String Name, String Login, String Password)
-        {
-            Object data = null;
-            if (Name == "" || Login == "" || Password == "")
-            {
-                data = new
-                {
-                    empty = true,
-                    valid = false,
-                    urlToRedirect = ""
-                };
-            }
-            else
-            {
-                try
-                {
-                    var url = "";
-                    var flag = false;
+        //[HttpPost]
+        //public JsonResult save(String Name, String Login, String Password)
+        //{
+        //    Object data = null;
+        //    if (Name == "" || Login == "" || Password == "")
+        //    {
+        //        data = new
+        //        {
+        //            empty = true,
+        //            valid = false,
+        //            urlToRedirect = ""
+        //        };
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            var url = "";
+        //            var flag = false;
 
-                    var obj = BAL.UserBO.ValidateUser(Login, Password);
-                    if (obj == null)
-                    {
-                        var dto = new UserDTO();
-                        dto.Login = Login;
-                        dto.Password = Password;
-                        dto.Name = Name;
-                        var save = BAL.UserBO.Save(dto);
-                        flag = true;
-                        obj = BAL.UserBO.ValidateUser(Login, Password);
-                        //SessionManager.User = obj;
-                        url = Url.Content("~/User/Login");
-                    }
+        //            var obj = BAL.UserBO.ValidateUser(Login, Password);
+        //            if (obj == null)
+        //            {
+        //                var dto = new UserDTO();
+        //                dto.Login = Login;
+        //                dto.Password = Password;
+        //                dto.Name = Name;
+        //                var save = BAL.UserBO.Save(dto);
+        //                flag = true;
+        //                obj = BAL.UserBO.ValidateUser(Login, Password);
+        //                //SessionManager.User = obj;
+        //                url = Url.Content("~/User/Login");
+        //            }
 
-                    data = new
-                    {
-                        empty = false,
-                        valid = flag,
-                        urlToRedirect = url
-                    };
-                }
-                catch (Exception)
-                {
-                    data = new
-                    {
-                        empty = false,
-                        valid = false,
-                        urlToRedirect = ""
-                    };
-                }
-            }
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = flag,
+        //                urlToRedirect = url
+        //            };
+        //        }
+        //        catch (Exception)
+        //        {
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = false,
+        //                urlToRedirect = ""
+        //            };
+        //        }
+        //    }
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
 
     }
 }

@@ -8,7 +8,7 @@ var folderManager = (function () {
                 headers: {
                     'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                 },
-                url: basePath+'/api/Values/GetChildFolders',
+                url: basePath+'api/Values/GetChildFolders',
                 data: d,
                 success: function (r) {
                     if (r.response[0] !== "") {
@@ -27,26 +27,30 @@ var folderManager = (function () {
             $.ajax(settings);
         },
         create: function (d) {
-            var settings = {
-                type: "GET",
-                url: '/User/Create',
-                data: d,
+            //var settings = {
+            //    type: "GET",
+            //    dataType: "json",
+            //    headers: {
+            //        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            //    },
+            //    url: basePath+'api/Values/Create',
+            //    data: d,
 
-                success: function (response) {
-                    if (response.empty == true && response.valid == false) {
-                        alert("invalid folder name");
-                    }
-                    else if (response.valid == true && response.empty == false) {
-                        $("#info").empty();
-                        $("#newfolname").val("untitled folder");
-                        ajaxRequest();
-                    }
-                },
-                error: function (err, type, httpStatus) {
-                    alert("error has occured");
-                }
-            };
-            $.ajax(settings);
+            //    success: function (response) {
+            //        if (response.empty == true && response.valid == false) {
+            //            alert("invalid folder name");
+            //        }
+            //        else if (response.valid == true && response.empty == false) {
+            //            $("#info").empty();
+            //            $("#newfolname").val("untitled folder");
+            //            ajaxRequest();
+            //        }
+            //    },
+            //    error: function (err, type, httpStatus) {
+            //        alert("error has occured");
+            //    }
+            //};
+            //$.ajax(settings);
         },
         fun: function (currentDiv) {
             var parentFolderID = currentDiv.nextElementSibling.value;
