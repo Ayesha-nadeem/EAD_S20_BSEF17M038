@@ -204,6 +204,10 @@
       <Project>{4c1cd92f-86cc-4389-aa2d-0eb34f29b874}</Project>
       <Name>BAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonHelper\CommonHelper.csproj">
+      <Project>{0c418494-c583-44c8-88c6-af4b40f3bc05}</Project>
+      <Name>CommonHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{69b94d6d-dac5-4bb1-8478-ec70c41b9323}</Project>
       <Name>Entities</Name>

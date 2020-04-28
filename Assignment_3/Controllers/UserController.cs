@@ -28,55 +28,57 @@ namespace Assignment_3.Controllers
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        //[HttpPost]
-        //public JsonResult ValidateUser(String login, String password)
-        //{
-        //    Object data = null;
-        //    if (login == "" || password == "")
-        //    {
-        //        data = new
-        //        {
-        //            empty = true,
-        //            valid = false,
-        //            urlToRedirect = ""
-        //        };
-        //    }
-        //    else
-        //    {
+        [HttpPost]
+        public JsonResult ValidateUser(String login, String password)
+        {
+            Object data = null;
+            if (login == "" || password == "")
+            {
+                data = new
+                {
+                    empty = true,
+                    valid = false,
+                    urlToRedirect = ""
+                };
+            }
+            else
+            {
 
 
-        //        try
-        //        {
-        //            var url = "";
-        //            var flag = false;
+                try
+                {
+                    var url = "";
+                    var flag = false;
+                    
+                    var obj = BAL.UserBO.ValidateUser(login, password);
+                    if (obj != null)
+                    {
+                        var token = CommonHelper.Token.GetToken(obj.UserID);
+                        obj.Token = token;
+                        flag = true;
+                        SessionManager.User = obj;
+                        url = Url.Content("~/User/Home");
+                    }
 
-        //            var obj = BAL.UserBO.ValidateUser(login, password);
-        //            if (obj != null)
-        //            {
-        //                flag = true;
-        //                SessionManager.User = obj;
-        //                url = Url.Content("~/User/Home");
-        //            }
-
-        //            data = new
-        //            {
-        //                empty = false,
-        //                valid = flag,
-        //                urlToRedirect = url
-        //            };
-        //        }
-        //        catch (Exception)
-        //        {
-        //            data = new
-        //            {
-        //                empty = false,
-        //                valid = false,
-        //                urlToRedirect = ""
-        //            };
-        //        }
-        //    }
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-        //}
+                    data = new
+                    {
+                        empty = false,
+                        valid = flag,
+                        urlToRedirect = url
+                    };
+                }
+                catch (Exception)
+                {
+                    data = new
+                    {
+                        empty = false,
+                        valid = false,
+                        urlToRedirect = ""
+                    };
+                }
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         //public JsonResult GetChildFolders(String pfid)
         //{
 
@@ -106,55 +108,56 @@ namespace Assignment_3.Controllers
         //        };
         //    }
 
-    //        return Json(data, JsonRequestBehavior.AllowGet);
-    //}
-    // var d={"newFolderName":n,"pfid":i};
-    public JsonResult Create(String newFolderName, String pfid)
-    {
+        //        return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+        // var d={"newFolderName":n,"pfid":i};
+        //public JsonResult Create(String newFolderName, String pfid)
+        //{
 
-        Object data = null;
-        if (newFolderName == "")
-        {
-            data = new
-            {
-                empty = true,
-                valid = false,
-            };
-        }
-        else
-        {
-            try
-            {
+        //    Object data = null;
+        //    if (newFolderName == "")
+        //    {
+        //        data = new
+        //        {
+        //            empty = true,
+        //            valid = false,
+        //        };
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
 
-                var dto = new FolderDTO();
-                dto.FolderName = newFolderName;
-                dto.ParentFolderID = Convert.ToInt32(pfid);
-                dto.UserID = SessionManager.User.UserID;
-                var save = BAL.FolderBO.Save(dto);
+        //            var dto = new FolderDTO();
+        //            dto.FolderName = newFolderName;
+        //            dto.ParentFolderID = Convert.ToInt32(pfid);
+        //            dto.UserID = SessionManager.User.UserID;
+        //            var save = BAL.FolderBO.Save(dto);
 
-                data = new
-                {
-                    empty = false,
-                    valid = true,
-                };
-            }
-            catch (Exception)
-            {
-                data = new
-                {
-                    empty = false,
-                    valid = false,
-                };
-            }
-        }
-        return Json(data, JsonRequestBehavior.AllowGet);
-    }
-    public ActionResult Home()
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = true,
+        //            };
+        //        }
+        //        catch (Exception)
+        //        {
+        //            data = new
+        //            {
+        //                empty = false,
+        //                valid = false,
+        //            };
+        //        }
+        //    }
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+        public ActionResult Home()
         {
 
             if (SessionManager.IsValidUser)
             {
-                return View();
+                var dto = SessionManager.User;
+                return View(dto);
             }
             else
             {

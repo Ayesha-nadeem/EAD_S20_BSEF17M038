@@ -120,61 +120,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost]
-        public object Save(UserDTO dto)
-        {
-            object data = null;
-            UserDTO dto2 = null;
-            if (dto.Login == "" || dto.Password == "")
-            {
-                data = new
-                {
-                    token = "",
-                    User = dto2,
-
-                };
-            }
-            else
-            {
-                var obj = BAL.UserBO.ValidateUser(dto.Login, dto.Password);
-                if (obj == null)
-                {
-                    data = new
-                    {
-                        token = "",
-                        User = dto2,
-
-                    };
-                }
-                else
-                {
-                    string key = "my_secret_key_12345";
-                    var issuer = "http://mysite.com";
-                    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-                    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-                    var permClaims = new List<Claim>();
-                    permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-
-                    permClaims.Add(new Claim("userid", obj.UserID.ToString()));
-
-
-                    var token = new JwtSecurityToken(issuer,
-                                    issuer,
-                                   permClaims,
-                                    expires: DateTime.Now.AddDays(1),
-                                    signingCredentials: credentials);
-                    var jwt_token = new JwtSecurityTokenHandler().WriteToken(token);
-                    data = new
-                    {
-                        token = jwt_token,
-                        User = obj,
-                    };
-                }
-            }
-
-            return data;
-        }
+        
 
         [HttpPost]
         public Object Save2(UserDTO dto1)

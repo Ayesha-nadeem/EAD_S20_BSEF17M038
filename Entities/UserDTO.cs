@@ -8,6 +8,7 @@ namespace  Entities
 {
     public class UserDTO
     {
+        public String Token { get; set; }
         public int UserID { get; set; }
         public String Name { get; set; }
         public String Login { get; set; }

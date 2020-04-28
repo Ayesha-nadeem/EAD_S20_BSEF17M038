@@ -1,4 +1,4 @@
-﻿
+﻿@model  Entities.UserDTO
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/PublicLayout.cshtml";
@@ -41,6 +41,9 @@
 
     <script src="~/Scripts/folder.js"></script>
     <script>
+        window.jwtToken = '@Model.Token'
+        alert(window.jwtToken);
+        sessionStorage.setItem('token', window.jwtToken);
         function ajaxRequest() {
 
             var i = $("#parentfolderID").val();

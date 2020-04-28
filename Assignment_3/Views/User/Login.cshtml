@@ -26,53 +26,41 @@
 </div>
 
 
+@section scripts {
 
-@section scripts{
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var basePath = 'https://localhost:44322/';
-           
+    <script src="~/Scripts/user.js"></script>
+    <script>
+        $(function () {
             $("#btnLogin").click(function () {
+
                 var login = $("#txtLogin").val();
                 var pass = $("#txtPassword").val();
-                var dataToSend = { Login: login, Password: pass };
-                var settings = {
-                    type: "POST",
-                    dataType: "json",
-                    url: basePath + "api/Values/Save",
-                    data: dataToSend,
-                    success: function (result) {
-                        if (result.User == null) {
-                            $("#error").html("error");
-                                }
-                        else {
-                            sessionStorage.setItem('token', result.token);
-                            var dataToSend2 = { "dto": result.User };
-                            var settings2 =
-                            {
-                                type: "POST",
-                                dataType: "json",
-                                url: "/User/setSession",
-                                data: dataToSend2,
-                                success: function (result) {
-                                    location.href = "/User/Home"
-                                },
-                                error: function (e) {
-                                    alert("session error");
-                                }
+                var d = { "login": login, "password": pass };
 
-                            }
-                            $.ajax(settings2);
-                        }
-                    },
-                    error: function (e) {
-                        alert("User error");
+                var settings = {
+                type: "POST",
+                dataType: "json",
+                url: '/User/ValidateUser',
+                data: d,
+                success: function (resp) {
+                    if (resp.empty == true) {
+                        $("#error").html("all fields required");
                     }
-                };
-                $.ajax(settings);
+                    else if (resp.valid == true) {
+                        location.href = resp.urlToRedirect;
+                    }
+                    else {
+                        $("#error").html("Invalid Login/Password");
+                    }
+                },
+                error: function (e) {
+                    $("#error").html("something went wrong");
+                }
+            };
+            $.ajax(settings);
                 return false;
             });
         });
     </script>
+
 }
